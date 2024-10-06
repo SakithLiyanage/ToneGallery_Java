@@ -1,64 +1,62 @@
 package com.products;
 
 public class Product {
-	private int productID;
-	private String name;
-	private String category;
-	private double price;
-	private String image_path;
-	
-	public Product() {
-		
-	}
+    private int productID;
+    private String name;
+    private String category;
+    private double price;  // Use double consistently
+    private String image_path;
 
-	public Product(int productID, String name, String category, float price, String image_path) {
-		this.productID = productID;
-		this.name = name;
-		this.category = category;
-		this.price = price;
-		this.image_path = image_path;
-	}
+    // Default constructor
+    public Product() {}
 
-	public int getProductID() {
-		return productID;
-	}
+    // Constructor with all parameters
+    public Product(int productID, String name, String category, double price, String image_path) {
+        this.productID = productID;
+        this.name = name;
+        this.category = category;
+        this.price = price;
+        this.image_path = image_path;
+    }
 
-	public void setProductID(int productID) {
-		this.productID = productID;
-	}
+    // Getters and setters
+    public int getProductID() {
+        return productID;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public void setProductID(int productID) {
+        this.productID = productID;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public String getCategory() {
-		return category;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setCategory(String category) {
-		this.category = category;
-	}
+    public String getCategory() {
+        return category;
+    }
 
-	  public double getPrice() {
-	        return price;
-	  }
+    public void setCategory(String category) {
+        this.category = category;
+    }
 
-	 public void setPrice(double price) {
-	        this.price = price;
-	 }
+    public double getPrice() {
+        return price;
+    }
 
-	public String getImage_path() {
-		return image_path;
-	}
+    public void setPrice(double price) {
+        this.price = price;
+    }
 
-	public void setImage_path(String image_path) {
-		this.image_path = image_path;
-	}
-	
-	
-	
+    public String getImage_path() {
+        return image_path;
+    }
+
+    public void setImage_path(String image_path) {
+        this.image_path = image_path;
+    }
 }

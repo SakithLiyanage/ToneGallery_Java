@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
+<%@ page import="com.products.Product" %>
+<%@ page import="com.products.ViewShopProductsDAO" %>
+<%@ page import="java.util.List" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -195,91 +197,152 @@
 
 
         <!-- Shop Start-->
-        <div class="container-fluid fruite py-5">
-            <div class="container py-5">
-                <div class="tab-class text-center">
-                    <div class="row g-4">
-                        <div class="col-lg-4 text-start">
-                            <h1>Our Products</h1>
-                        </div>
-                        
-                    </div><br>
-                    <div class="tab-content">
-                        <div id="tab-1" class="tab-pane fade show p-0 active">
-                            <div class="row g-4">
-                                <div class="col-lg-12">
-                                    <div class="row g-4">
-                                        <div class="col-md-6 col-lg-4 col-xl-3">
-                                            <div class="rounded position-relative fruite-item">
-                                                <div class="fruite-img">
-                                                    <img src="img/guitar.jpg" class="img-fluid w-100 rounded-top" alt="">
-                                                </div>
-                                                <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">Guitar</div>
-                                                <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                                                    <h4>Guitar</h4>
-                                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
-                                                    <div class="d-flex justify-content-between flex-lg-wrap">
-                                                        <p class="text-dark fs-5 fw-bold mb-0">$500</p>
-                                                        <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 col-lg-4 col-xl-3">
-                                            <div class="rounded position-relative fruite-item">
-                                                <div class="fruite-img">
-                                                    <img src="img/drums.jpg" class="img-fluid w-100 rounded-top" alt="">
-                                                </div>
-                                                <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">Drums & Percussion</div>
-                                                <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                                                    <h4>Drums</h4>
-                                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
-                                                    <div class="d-flex justify-content-between flex-lg-wrap">
-                                                        <p class="text-dark fs-5 fw-bold mb-0">$800</p>
-                                                        <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 col-lg-4 col-xl-3">
-                                            <div class="rounded position-relative fruite-item">
-                                                <div class="fruite-img">
-                                                    <img src="img/piano.avif" class="img-fluid w-100 rounded-top" alt="">
-                                                </div>
-                                                <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">Keyboards & Synth</div>
-                                                <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                                                    <h4>Keyboards & Synth</h4>
-                                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
-                                                    <div class="d-flex justify-content-between flex-lg-wrap">
-                                                        <p class="text-dark fs-5 fw-bold mb-0">$900</p>
-                                                        <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 col-lg-4 col-xl-3">
-                                            <div class="rounded position-relative fruite-item">
-                                                <div class="fruite-img">
-                                                    <img src="img/violine.JPG" class="img-fluid w-100 rounded-top" alt="">
-                                                </div>
-                                                <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">Strings</div>
-                                                <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                                                    <h4>Violine</h4>
-                                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
-                                                    <div class="d-flex justify-content-between flex-lg-wrap">
-                                                        <p class="text-dark fs-5 fw-bold mb-0">$400</p>
-                                                        <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        
-                                    </div>
-                                </div>
+       <div class="container-fluid py-5 categories">
+    <div class="container py-5">
+        <div class="text-center mb-4">
+            <h1 class="fw-bold">Our Categories</h1>
+        </div>
+        <div class="tab-content">
+            <div id="tab-1" class="tab-pane fade show active">
+                <div class="row g-4">
+                    <div class="col-md-6 col-lg-4">
+                        <div class="rounded position-relative category-item">
+                            <div class="category-img">
+                                <img src="img/guitar.jpg" class="img-fluid w-100 rounded-top" alt="Guitar">
+                                <div class="category-label">Guitar</div>
+                            </div>
+                            <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+                                <h4 class="text-dark fw-bold">Guitar</h4>
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt.</p>
+                                <a href="shop.jsp" class="btn btn-outline-secondary rounded-pill"><i class="fa fa-shopping-bag me-2"></i> Shop Now</a>
                             </div>
                         </div>
-                        </div></div>
-                        </div></div>
+                    </div>
+                    <div class="col-md-6 col-lg-4">
+                        <div class="rounded position-relative category-item">
+                            <div class="category-img">
+                                <img src="img/drums.jpg" class="img-fluid w-100 rounded-top" alt="Drums">
+                                <div class="category-label">Drums & Percussion</div>
+                            </div>
+                            <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+                                <h4 class="text-dark fw-bold">Drums</h4>
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt.</p>
+                                <a href="shop.jsp" class="btn btn-outline-secondary rounded-pill"><i class="fa fa-shopping-bag me-2"></i> Shop Now</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4">
+                        <div class="rounded position-relative category-item">
+                            <div class="category-img">
+                                <img src="img/piano.avif" class="img-fluid w-100 rounded-top" alt="Keyboards & Synth">
+                                <div class="category-label">Keyboards & Synth</div>
+                            </div>
+                            <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+                                <h4 class="text-dark fw-bold">Keyboards & Synth</h4>
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt.</p>
+                                <a href="shop.jsp" class="btn btn-outline-secondary rounded-pill"><i class="fa fa-shopping-bag me-2"></i> Shop Now</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4">
+                        <div class="rounded position-relative category-item">
+                            <div class="category-img">
+                                <img src="https://img.freepik.com/premium-vector/live-sound-neon-sign-electric-guitar-brick-wall-background_1262-10919.jpg" class="img-fluid w-100 rounded-top" alt="Keyboards & Synth">
+                                <div class="category-label">Live Sound & Light</div>
+                            </div>
+                            <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+                                <h4 class="text-dark fw-bold">Live Sound & Light</h4>
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt.</p>
+                                <a href="shop.jsp" class="btn btn-outline-secondary rounded-pill"><i class="fa fa-shopping-bag me-2"></i> Shop Now</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4">
+                        <div class="rounded position-relative category-item">
+                            <div class="category-img">
+                                <img src="https://img.freepik.com/premium-photo/audio-recording-studio-with-professional-audio-equipment-closeup-view-shot-modern-music-record-studio-control-desk-with-computer-screen-show-user-interface-daw-software-ai-generated_538213-7605.jpg" class="img-fluid w-100 rounded-top" alt="Keyboards & Synth">
+                                <div class="category-label">Studio & Recordings</div>
+                            </div>
+                            <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+                                <h4 class="text-dark fw-bold">Studio & Recordings</h4>
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt.</p>
+                                <a href="shop.jsp" class="btn btn-outline-secondary rounded-pill"><i class="fa fa-shopping-bag me-2"></i> Shop Now</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4">
+                        <div class="rounded position-relative category-item">
+                            <div class="category-img">
+                                <img src="img/violine.JPG" class="img-fluid w-100 rounded-top" alt="Violine">
+                                <div class="category-label">Strings</div>
+                            </div>
+                            <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+                                <h4 class="text-dark fw-bold">Strings</h4>
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt.</p>
+                                <a href="shop.jsp" class="btn btn-outline-secondary rounded-pill"><i class="fa fa-shopping-bag me-2"></i> Shop Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.categories {
+    background-color: #f8f9fa; /* Light background for contrast */
+}
+
+.category-item {
+    overflow: hidden; /* Ensure the image does not overflow */
+    transition: transform 0.3s ease; /* Add a slight hover effect */
+    height: 500px; /* Set a fixed height for the card */
+}
+
+.category-item:hover {
+    transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
+.category-img {
+    position: relative; /* Allows for absolute positioning of label */
+    height: 250px; /* Set a fixed height for the image */
+    overflow: hidden; /* Hide overflow for non-uniform images */
+}
+
+.category-img img {
+    width: 100%;
+    height: 100%; /* Ensure the image covers the entire height */
+    object-fit: cover; /* Maintain aspect ratio while covering the area */
+}
+
+.category-label {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: opacity 0.3s ease;
+}
+
+.category-item:hover .category-label {
+    opacity: 0.9; /* Slightly more visible on hover */
+}
+
+.btn-outline-primary {
+    border-color: #007bff; /* Primary color for button */
+    color: #007bff; /* Button text color */
+}
+
+.btn-outline-primary:hover {
+    background-color: #007bff; /* Primary color on hover */
+    color: white; /* White text on hover */
+}
+
+</style>
                         
 
 
@@ -333,126 +396,66 @@
 
 
         <!-- featured Shop Start-->
-        <div class="container-fluid vesitable py-5">
-            <div class="container py-5">
-                <h1 class="mb-0">Featured Products</h1>
-                <div class="owl-carousel vegetable-carousel justify-content-center">
-                    <div class="border border-primary rounded position-relative vesitable-item">
-                        <div class="vesitable-img">
-                            <img src="img/guitar.jpg" class="img-fluid w-100 rounded-top" alt="">
-                        </div>
-                        <div class="text-white bg-primary px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px;">Guitar</div>
-                        <div class="p-4 rounded-bottom">
-                            <h4>Guitar</h4>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
-                            <div class="d-flex justify-content-between flex-lg-wrap">
-                                <p class="text-dark fs-5 fw-bold mb-0">$300</p>
-                                <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+<!-- featured Shop Start-->
+<div class="container-fluid py-5">
+    <div class="container py-5">
+        <h1 class="mb-4">Featured Products</h1>
+        <div class="row g-4">
+            <div class="col-lg-12">
+                <div class="row g-4 justify-content-center">
+
+                    <%
+                        // Retrieve products from the database
+                        ViewShopProductsDAO productDAO = new ViewShopProductsDAO();
+                        List<Product> productList = productDAO.getAllProducts();
+
+                        // Limit to first 4 products
+                        int productCount = Math.min(productList.size(), 3); // Ensuring not to exceed available products
+                        for (int i = 0; i < productCount; i++) {
+                            Product product = productList.get(i);
+                    %>
+                    <div class="col-md-6 col-lg-6 col-xl-4">
+                        <div class="rounded position-relative fruite-item">
+                            <a href="product.jsp?productID=<%= product.getProductID() %>">
+                                <div class="fruite-img hover-zoom">
+                                    <img src="<%= request.getContextPath() + "/" %><%= product.getImage_path() %>" class="img-fluid w-100 rounded-top" alt="<%= product.getName() %>">
+                                </div>
+                                <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">
+                                    <%= product.getCategory() %>
+                                </div>
+                                <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+                                    <div class="d-flex justify-content-between flex-lg-wrap">
+                                        <h1 class="text-dark fs-5 fw-bold mb-0"><%= product.getName() %></h1>
+                                        <p class="text-dark fs-5 fw-bold mb-0">$<%= product.getPrice() %></p>
+                                    </a>
+                                    <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary">
+                                        <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="border border-primary rounded position-relative vesitable-item">
-                        <div class="vesitable-img">
-                            <img src="img/guitar.jpg" class="img-fluid w-100 rounded-top" alt="">
-                        </div>
-                        <div class="text-white bg-primary px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px;">Guitar</div>
-                        <div class="p-4 rounded-bottom">
-                            <h4>Guitar</h4>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
-                            <div class="d-flex justify-content-between flex-lg-wrap">
-                                <p class="text-dark fs-5 fw-bold mb-0">$300</p>
-                                <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="border border-primary rounded position-relative vesitable-item">
-                        <div class="vesitable-img">
-                            <img src="img/guitar.jpg" class="img-fluid w-100 rounded-top" alt="">
-                        </div>
-                        <div class="text-white bg-primary px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px;">Guitar</div>
-                        <div class="p-4 rounded-bottom">
-                            <h4>Guitar</h4>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
-                            <div class="d-flex justify-content-between flex-lg-wrap">
-                                <p class="text-dark fs-5 fw-bold mb-0">$300</p>
-                                <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="border border-primary rounded position-relative vesitable-item">
-                        <div class="vesitable-img">
-                            <img src="img/guitar.jpg" class="img-fluid w-100 rounded-top" alt="">
-                        </div>
-                        <div class="text-white bg-primary px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px;">Guitar</div>
-                        <div class="p-4 rounded-bottom">
-                            <h4>Guitar</h4>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
-                            <div class="d-flex justify-content-between flex-lg-wrap">
-                                <p class="text-dark fs-5 fw-bold mb-0">$300</p>
-                                <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="border border-primary rounded position-relative vesitable-item">
-                        <div class="vesitable-img">
-                            <img src="img/guitar.jpg" class="img-fluid w-100 rounded-top" alt="">
-                        </div>
-                        <div class="text-white bg-primary px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px;">Guitar</div>
-                        <div class="p-4 rounded-bottom">
-                            <h4>Guitar</h4>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
-                            <div class="d-flex justify-content-between flex-lg-wrap">
-                                <p class="text-dark fs-5 fw-bold mb-0">$300</p>
-                                <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="border border-primary rounded position-relative vesitable-item">
-                        <div class="vesitable-img">
-                            <img src="img/guitar.jpg" class="img-fluid w-100 rounded-top" alt="">
-                        </div>
-                        <div class="text-white bg-primary px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px;">Guitar</div>
-                        <div class="p-4 rounded-bottom">
-                            <h4>Guitar</h4>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
-                            <div class="d-flex justify-content-between flex-lg-wrap">
-                                <p class="text-dark fs-5 fw-bold mb-0">$300</p>
-                                <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="border border-primary rounded position-relative vesitable-item">
-                        <div class="vesitable-img">
-                            <img src="img/guitar.jpg" class="img-fluid w-100 rounded-top" alt="">
-                        </div>
-                        <div class="text-white bg-primary px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px;">Guitar</div>
-                        <div class="p-4 rounded-bottom">
-                            <h4>Guitar</h4>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
-                            <div class="d-flex justify-content-between flex-lg-wrap">
-                                <p class="text-dark fs-5 fw-bold mb-0">$300</p>
-                                <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="border border-primary rounded position-relative vesitable-item">
-                        <div class="vesitable-img">
-                            <img src="img/guitar.jpg" class="img-fluid w-100 rounded-top" alt="">
-                        </div>
-                        <div class="text-white bg-primary px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px;">Guitar</div>
-                        <div class="p-4 rounded-bottom">
-                            <h4>Guitar</h4>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
-                            <div class="d-flex justify-content-between flex-lg-wrap">
-                                <p class="text-dark fs-5 fw-bold mb-0">$300</p>
-                                <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
-                            </div>
-                        </div>
-                    </div>
+                    <%
+                        } // End of for loop
+                    %>
+                    <style>
+                        /* Hover effect for product image */
+                        .hover-zoom img {
+                            transition: transform 0.5s ease;
+                        }
+
+                        .hover-zoom:hover img {
+                            transform: scale(1.05); /* Slight zoom effect on hover */
+                        }
+                    </style>
+
                 </div>
             </div>
         </div>
-        <!-- Vesitable Shop End -->
+    </div>
+</div>
+<!--  Shop End -->
+
 
 
         <!-- Banner Section Start-->
@@ -527,93 +530,7 @@
         <!-- Fact Start -->
 
 
-        <!-- Tastimonial Start -->
-        <div class="container-fluid testimonial py-5">
-            <div class="container py-5">
-                <div class="testimonial-header text-center">
-                    <h4 class="text-primary">Our Feedbacks</h4>
-                    <h1 class="display-5 mb-5 text-dark">Our Client Saying!</h1>
-                </div>
-                <div class="owl-carousel testimonial-carousel">
-                    <div class="testimonial-item img-border-radius bg-light rounded p-4">
-                        <div class="position-relative">
-                            <i class="fa fa-quote-right fa-2x text-secondary position-absolute" style="bottom: 30px; right: 0;"></i>
-                            <div class="mb-4 pb-4 border-bottom border-secondary">
-                                <p class="mb-0">Lorem Ipsum is simply dummy text of the printing Ipsum has been the industry's standard dummy text ever since the 1500s,
-                                </p>
-                            </div>
-                            <div class="d-flex align-items-center flex-nowrap">
-                                <div class="bg-secondary rounded">
-                                    <img src="img/testimonial-1.jpg" class="img-fluid rounded" style="width: 100px; height: 100px;" alt="">
-                                </div>
-                                <div class="ms-4 d-block">
-                                    <h4 class="text-dark">Client Name</h4>
-                                    <p class="m-0 pb-3">Profession</p>
-                                    <div class="d-flex pe-5">
-                                        <i class="fas fa-star text-primary"></i>
-                                        <i class="fas fa-star text-primary"></i>
-                                        <i class="fas fa-star text-primary"></i>
-                                        <i class="fas fa-star text-primary"></i>
-                                        <i class="fas fa-star"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="testimonial-item img-border-radius bg-light rounded p-4">
-                        <div class="position-relative">
-                            <i class="fa fa-quote-right fa-2x text-secondary position-absolute" style="bottom: 30px; right: 0;"></i>
-                            <div class="mb-4 pb-4 border-bottom border-secondary">
-                                <p class="mb-0">Lorem Ipsum is simply dummy text of the printing Ipsum has been the industry's standard dummy text ever since the 1500s,
-                                </p>
-                            </div>
-                            <div class="d-flex align-items-center flex-nowrap">
-                                <div class="bg-secondary rounded">
-                                    <img src="img/testimonial-1.jpg" class="img-fluid rounded" style="width: 100px; height: 100px;" alt="">
-                                </div>
-                                <div class="ms-4 d-block">
-                                    <h4 class="text-dark">Client Name</h4>
-                                    <p class="m-0 pb-3">Profession</p>
-                                    <div class="d-flex pe-5">
-                                        <i class="fas fa-star text-primary"></i>
-                                        <i class="fas fa-star text-primary"></i>
-                                        <i class="fas fa-star text-primary"></i>
-                                        <i class="fas fa-star text-primary"></i>
-                                        <i class="fas fa-star text-primary"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="testimonial-item img-border-radius bg-light rounded p-4">
-                        <div class="position-relative">
-                            <i class="fa fa-quote-right fa-2x text-secondary position-absolute" style="bottom: 30px; right: 0;"></i>
-                            <div class="mb-4 pb-4 border-bottom border-secondary">
-                                <p class="mb-0">Lorem Ipsum is simply dummy text of the printing Ipsum has been the industry's standard dummy text ever since the 1500s,
-                                </p>
-                            </div>
-                            <div class="d-flex align-items-center flex-nowrap">
-                                <div class="bg-secondary rounded">
-                                    <img src="img/testimonial-1.jpg" class="img-fluid rounded" style="width: 100px; height: 100px;" alt="">
-                                </div>
-                                <div class="ms-4 d-block">
-                                    <h4 class="text-dark">Client Name</h4>
-                                    <p class="m-0 pb-3">Profession</p>
-                                    <div class="d-flex pe-5">
-                                        <i class="fas fa-star text-primary"></i>
-                                        <i class="fas fa-star text-primary"></i>
-                                        <i class="fas fa-star text-primary"></i>
-                                        <i class="fas fa-star text-primary"></i>
-                                        <i class="fas fa-star text-primary"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Tastimonial End -->
+       
 
 
         <!-- Footer Start -->

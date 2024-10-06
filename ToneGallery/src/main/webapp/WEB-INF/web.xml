@@ -17,6 +17,18 @@
     <url-pattern>/RegisterServlet</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+    <servlet-name>ViewShopProductsServlet</servlet-name>
+    <servlet-class>com.products.ViewShopProductsServlet</servlet-class>
+</servlet>
+
+<servlet-mapping>
+    <servlet-name>ViewShopProductsServlet</servlet-name>
+    <url-pattern>/shop</url-pattern>
+</servlet-mapping>
+  
+
+  
 
   <display-name>ToneGallery</display-name>
   <welcome-file-list>

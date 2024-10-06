@@ -1,40 +1,40 @@
-<%@ page import="com.products.Product" %>
-<%@ page import="com.products.ViewShopProductsDAO" %>
-<%@ page import="java.util.List" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.sql.*" %>
+<%@ page import="java.util.*" %>
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="utf-8">
-    <title>Tone Gallery</title>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="" name="keywords">
-    <meta content="" name="description">
+    <head>
+        <meta charset="utf-8">
+        <title>Tone Gallery</title>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <meta content="" name="keywords">
+        <meta content="" name="description">
 
-    <!-- Google Web Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Raleway:wght@600;800&display=swap" rel="stylesheet"> 
+        <!-- Google Web Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Raleway:wght@600;800&display=swap" rel="stylesheet"> 
 
-    <!-- Icon Font Stylesheet -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"/>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+        <!-- Icon Font Stylesheet -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"/>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
-    <!-- Libraries Stylesheet -->
-    <link href="lib/lightbox/css/lightbox.min.css" rel="stylesheet">
-    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+        <!-- Libraries Stylesheet -->
+        <link href="lib/lightbox/css/lightbox.min.css" rel="stylesheet">
+        <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
 
-    <!-- Customized Bootstrap Stylesheet -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Template Stylesheet -->
-    <link href="css/style.css" rel="stylesheet">
-</head>
+        <!-- Customized Bootstrap Stylesheet -->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
 
-<body>
+        <!-- Template Stylesheet -->
+        <link href="css/style.css" rel="stylesheet">
+    </head>
 
-    <!-- Spinner Start -->
+    <body>
+
+        <!-- Spinner Start -->
         <div id="spinner" class="show w-100 vh-100 bg-white position-fixed translate-middle top-50 start-50  d-flex align-items-center justify-content-center">
             <div class="spinner-grow text-primary" role="status"></div>
         </div>
@@ -95,81 +95,175 @@
         </div>
         <!-- Navbar End -->
 
-    <!-- Single Page Header Start -->
-    <div class="container-fluid page-header py-5">
-        <h1 class="text-center text-white display-6">Shop</h1>
-        <ol class="breadcrumb justify-content-center mb-0">
-            <li class="breadcrumb-item"><a href="index.jsp">Home</a></li>
-            <li class="breadcrumb-item active text-white">Shop</li>
-        </ol>
-    </div>
-    <!-- Single Page Header End -->
 
-    <!-- Products Display Start -->
-    <div class="container-fluid py-5">
-        <div class="container py-5">
-            <h1 class="mb-4">Musical Instruments</h1>
-            <div class="row g-4">
-                <div class="col-lg-12">
-                    <div class="row g-4 justify-content-center">
+      
+        <!-- Single Page Header start -->
+        <div class="container-fluid page-header py-5">
+            <h1 class="text-center text-white display-6">Shop Detail</h1>
+            <ol class="breadcrumb justify-content-center mb-0">
+                <li class="breadcrumb-item"><a href="index.jsp">Home</a></li>
+                <li class="breadcrumb-item"><a href="shop.jsp">Shop</a></li>
+                <li class="breadcrumb-item active text-white">Product</li>
+            </ol>
+        </div>
+        <!-- Single Page Header End -->
+
+
+        <!-- Single Product Start -->
+        <section style="padding-left:200px;">
+        <div class="container-fluid py-5 mt-5">
+            <div class="row g-4 mb-5">
+                <div class="col-lg-8 col-xl-9">
+                    <div class="row g-4">
 
                         <%
-                            // Retrieve products from the database
-                            ViewShopProductsDAO productDAO = new ViewShopProductsDAO();
-                            List<Product> productList = productDAO.getAllProducts();
+                        // Retrieve product ID from URL
+                        String productId = request.getParameter("productID");
+                        String productName = "";
+                        String productCategory = "";
+                        String productPrice = "";
+                        String productDescription = "";
+                        String productImage = "";
 
-                            for (Product product : productList) {
+                        Connection conn = null;
+                        PreparedStatement pstmt = null;
+                        ResultSet rs = null;
+
+                        try {
+                            // Database connection (adjust connection string as necessary)
+                            Class.forName("com.mysql.cj.jdbc.Driver");
+                            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/tonegallery", "root", "1234");
+
+                            // Query to fetch product details
+                            String sql = "SELECT * FROM products WHERE productID = ?";
+                            pstmt = conn.prepareStatement(sql);
+                            pstmt.setString(1, productId);
+                            rs = pstmt.executeQuery();
+
+                            // Display product details if available
+                            if (rs.next()) {
+                                productName = rs.getString("name");
+                                productCategory = rs.getString("category");
+                                productPrice = rs.getString("price");
+                                productImage = rs.getString("image_path"); // URL or path to the product image
                         %>
-                        <div class="col-md-6 col-lg-6 col-xl-4">
-    <div class="rounded position-relative fruite-item">
-        <a href="product.jsp?productID=<%= product.getProductID() %>">
-            <div class="fruite-img hover-zoom">
-                <img src="<%= request.getContextPath()+ "/"%><%= product.getImage_path() %>" class="img-fluid w-100 rounded-top" alt="<%= product.getName() %>">
-            </div>
-        
-        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">
-            <%= product.getCategory() %>
-        </div>
-        <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-            <div class="d-flex justify-content-between flex-lg-wrap">
-                <h1 class="text-dark fs-5 fw-bold mb-0"><%= product.getName() %></h1>
-                <p class="text-dark fs-5 fw-bold mb-0">$<%= product.getPrice() %></p></a>
-                <a href="product.jsp?productID=<%= product.getProductID() %>" class="btn border border-secondary rounded-pill px-3 text-primary">
-                    <i class="fa fa-eye me-2 text-primary" style="margin-top:10px"></i> View
-                </a>
-            </div>
-        </div>
+
+                        <div class="col-lg-6">
+                            <div class="border rounded">
+                                <a href="#">
+                                    <img src="<%= productImage %>" class="img-fluid rounded" alt="Image">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <h4 class="fw-bold mb-3"><%= productName %></h4>
+                            <p class="mb-3">Category: <%= productCategory %></p>
+                            <h5 class="fw-bold mb-3"><%= productPrice %> $</h5>
+                            <div class="d-flex mb-4">
+                                <i class="fa fa-star text-secondary"></i>
+                                <i class="fa fa-star text-secondary"></i>
+                                <i class="fa fa-star text-secondary"></i>
+                                <i class="fa fa-star text-secondary"></i>
+                                <i class="fa fa-star"></i>
+                            </div>
+                            <p class="mb-4"><%= productDescription %></p>
+                            <div class="input-group quantity mb-5" style="width: 100px;">
+                               <div class="input-group quantity mb-5" style="width: 100px;">
+   <!-- Quantity buttons and input -->
+<div class="input-group quantity mb-5" style="width: 100px;">
+    <!-- Minus button -->
+    <div class="input-group-btn">
+        <button class="btn btn-sm btn-minus rounded-circle bg-light border" type="button" onclick="decreaseQuantity()">
+            <i class="fa fa-minus"></i>
+        </button>
+    </div>
+    
+    <!-- Quantity input field -->
+    <input type="text" id="productQuantity" class="form-control form-control-sm text-center border-0" value="1">
+    
+    <!-- Plus button -->
+    <div class="input-group-btn">
+        <button class="btn btn-sm btn-plus rounded-circle bg-light border" type="button" onclick="increaseQuantity()">
+            <i class="fa fa-plus"></i>
+        </button>
     </div>
 </div>
-                        <%
-                            }
-                        %>
-<style>
-/* Hover effect for product image */
-.hover-zoom img {
-    transition: transform 0.5s ease;
-}
 
-.hover-zoom:hover img {
-    transform: scale(1.05); /* Slight zoom effect on hover */
-}
-</style>
+<!-- Form to add to cart -->
+<form action="AddToCartServlet" method="post">
+    <!-- Hidden inputs for product details -->
+    <input type="hidden" name="productID" value="<%= productId %>">
+    <input type="hidden" name="productName" value="<%= productName %>">
+    <input type="hidden" name="pricePerUnit" value="<%= productPrice %>">
+    
+    <!-- Hidden quantity input that will update based on buttons -->
+    <input type="hidden" name="quantity" id="formQuantity" value="1">
+
+    <!-- Add to cart button -->
+    <button type="submit" class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary" style="width:200px;">
+        <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
+    </button>
+</form>
+
+<script>
+    function increaseQuantity() {
+        var qtyInput = document.getElementById("productQuantity");
+        var formQtyInput = document.getElementById("formQuantity");
+        var currentQty = parseInt(qtyInput.value);
+        
+        // Increase quantity
+        qtyInput.value = currentQty + 1;
+        formQtyInput.value = currentQty + 1;
+    }
+
+    function decreaseQuantity() {
+        var qtyInput = document.getElementById("productQuantity");
+        var formQtyInput = document.getElementById("formQuantity");
+        var currentQty = parseInt(qtyInput.value);
+        
+        // Decrease quantity, but not below 1
+        if (currentQty > 1) {
+            qtyInput.value = currentQty - 1;
+            formQtyInput.value = currentQty - 1;
+        }
+    }
+</script>
+
+
+                        </div>
+
+                        <%
+                            } else {
+                                out.println("<p>Product not found!</p>");
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        } finally {
+                            try {
+                                if (rs != null) rs.close();
+                                if (pstmt != null) pstmt.close();
+                                if (conn != null) conn.close();
+                            } catch (SQLException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        %>
                         
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <!-- Products Display End -->
+    </section>
+    <!-- Single Product End -->
 
-    <!-- Footer Start -->
+        <!-- Footer Start -->
         <div class="container-fluid bg-dark text-white-50 footer pt-5 mt-5">
             <div class="container py-5">
                 <div class="pb-4 mb-4" style="border-bottom: 1px solid rgba(226, 175, 24, 0.5) ;">
                     <div class="row g-4">
                         <div class="col-lg-3">
                             <a href="#">
-                                <h1 class="text-primary mb-0">ToneGallery</h1>
+                                <h1 class="text-primary mb-0">Tone Gallery</h1>
                                 <p class="text-secondary mb-0">Your one-stop destination for all things musical</p>
                             </a>
                         </div>
@@ -251,9 +345,12 @@
         </div>
         <!-- Copyright End -->
 
-    <!-- Back to Top -->
-    <a href="#" class="btn btn-primary border-3 border-primary rounded-circle back-to-top"><i class="fa fa-arrow-up"></i></a>   
 
+
+        <!-- Back to Top -->
+        <a href="#" class="btn btn-primary border-3 border-primary rounded-circle back-to-top"><i class="fa fa-arrow-up"></i></a>   
+
+        
     <!-- JavaScript Libraries -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -264,5 +361,7 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
-</body>
+    
+    </body>
+
 </html>
