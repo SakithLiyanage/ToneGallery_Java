@@ -1,49 +1,28 @@
 package com.cart;
 
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
+
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+import com.cart.CartItem;
+import com.products.DBConnection;
 
 public class CartDAO {
+    public void addToCart(CartItem cart) throws SQLException {
+        String sql = "INSERT INTO cart (product_id, product_name, price_per_unit, quantity, total_price) VALUES (?, ?, ?, ?, ?)";
+        
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+             
+            pstmt.setInt(1, cart.getProductId());
+            pstmt.setString(2, cart.getProductName());
+            pstmt.setDouble(3, cart.getPricePerUnit());
+            pstmt.setInt(4, cart.getQuantity());
+            pstmt.setDouble(5, cart.getTotalPrice());
 
-    // Method to get all cart items (without checking user ID)
-    public List<CartItem> getAllCartItems() {
-        List<CartItem> cartItems = new ArrayList<>();
-        Connection conn = null;
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
-
-        try {
-            // Your DB connection
-            conn = DatabaseConnection.getConnection();
-            String query = "SELECT * from cart";
-            stmt = conn.prepareStatement(query);
-            rs = stmt.executeQuery();
-
-            while (rs.next()) {
-                CartItem item = new CartItem();
-                item.setProductId(rs.getInt("productID"));
-                item.setProductName(rs.getString("productName"));
-                item.setPrice(rs.getDouble("pricePerUnit"));
-                item.setQuantity(rs.getInt("quantity"));
-                item.setTotalPrice(item.getPrice() * item.getQuantity());
-
-                cartItems.add(item);
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            // Close resources
-            try {
-                if (rs != null) rs.close();
-                if (stmt != null) stmt.close();
-                if (conn != null) conn.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            pstmt.executeUpdate();
         }
-
-        return cartItems;
     }
 }

@@ -1,9 +1,7 @@
 package com.cart;
 
+
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -15,49 +13,31 @@ public class AddToCartServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Retrieve form data
-        String productID = request.getParameter("productID");
-        String productName = request.getParameter("productName");
-        String pricePerUnitStr = request.getParameter("pricePerUnit");
-        String quantityStr = request.getParameter("quantity");
+        // Get product details from the request
+    	int productId = Integer.parseInt(request.getParameter("productID"));
+    	String productName = request.getParameter("productName");
+    	double pricePerUnit = Double.parseDouble(request.getParameter("pricePerUnit"));
+    	int quantity = Integer.parseInt(request.getParameter("quantity"));
 
-        // Convert necessary fields
-        double pricePerUnit = Double.parseDouble(pricePerUnitStr);
-        int quantity = Integer.parseInt(quantityStr);
+        
+        // Calculate total price
         double totalPrice = pricePerUnit * quantity;
+        
+        // Create Cart object
+        CartItem cart = new CartItem();
+        cart.setProductId(productId);
+        cart.setProductName(productName);
+        cart.setPricePerUnit(pricePerUnit);
+        cart.setQuantity(quantity);
+        cart.setTotalPrice(totalPrice);
 
-        Connection conn = null;
-        PreparedStatement pstmt = null;
-
+        // Add to Cart using CartDAO
+        CartDAO cartDAO = new CartDAO();
         try {
-            // Database connection
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/tonegallery", "root", "1234");
-
-            // Insert query
-            String sql = "INSERT INTO cart (productID, productName, pricePerUnit, quantity, totalPrice) VALUES (?, ?, ?, ?, ?)";
-            pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, productID);
-            pstmt.setString(2, productName);
-            pstmt.setDouble(3, pricePerUnit);
-            pstmt.setInt(4, quantity);
-            pstmt.setDouble(5, totalPrice);
-
-            // Execute the insert statement
-            pstmt.executeUpdate();
-
-            // Redirect back to product or cart page (optional)
-            response.sendRedirect("cart.jsp");
+            cartDAO.addToCart(cart);
+            response.sendRedirect("cart.jsp"); // Redirect to cart page
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            try {
-                if (pstmt != null) pstmt.close();
-                if (conn != null) conn.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
         }
     }
 }
-

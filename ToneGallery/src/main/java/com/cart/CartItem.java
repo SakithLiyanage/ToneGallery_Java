@@ -1,62 +1,60 @@
 package com.cart;
 
+
 public class CartItem {
+    private int id;
     private int productId;
     private String productName;
-    private double price;
+    private double pricePerUnit;
     private int quantity;
     private double totalPrice;
-    
-	public CartItem(int productId, String productName, double price, int quantity, double totalPrice) {
-		this.productId = productId;
-		this.productName = productName;
-		this.price = price;
-		this.quantity = quantity;
-		this.totalPrice = totalPrice;
-	}
 
-	public CartItem() {
-		// TODO Auto-generated constructor stub
-	}
+    // Getters and Setters
+    public int getId() {
+        return id;
+    }
 
-	public int getProductId() {
-		return productId;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	public void setProductId(int productId) {
-		this.productId = productId;
-	}
+    public int getProductId() {
+        return productId;
+    }
 
-	public String getProductName() {
-		return productName;
-	}
+    public void setProductId(int productId) {
+        this.productId = productId;
+    }
 
-	public void setProductName(String productName) {
-		this.productName = productName;
-	}
+    public String getProductName() {
+        return productName;
+    }
 
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
 
-	public double getPrice() {
-		return price;
-	}
+    public double getPricePerUnit() {
+        return pricePerUnit;
+    }
 
-	public void setPrice(double price) {
-		this.price = price;
-	}
+    public void setPricePerUnit(double pricePerUnit) {
+        this.pricePerUnit = pricePerUnit;
+    }
 
-	public int getQuantity() {
-		return quantity;
-	}
+    public int getQuantity() {
+        return quantity;
+    }
 
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
-	}
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
 
-	public double getTotalPrice() {
-		return totalPrice;
-	}
+    public double getTotalPrice() {
+        return totalPrice;
+    }
 
-	public void setTotalPrice(double totalPrice) {
-		this.totalPrice = totalPrice;
-	}
+    public void setTotalPrice(double totalPrice) {
+        this.totalPrice = totalPrice;
+    }
 }

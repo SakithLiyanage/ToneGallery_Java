@@ -145,7 +145,7 @@
                                 productName = rs.getString("name");
                                 productCategory = rs.getString("category");
                                 productPrice = rs.getString("price");
-                                productImage = rs.getString("image_path"); // URL or path to the product image
+                                productImage = rs.getString("image_path");                                
                         %>
 
                         <div class="col-lg-6">
@@ -169,35 +169,15 @@
                             <p class="mb-4"><%= productDescription %></p>
                             <div class="input-group quantity mb-5" style="width: 100px;">
                                <div class="input-group quantity mb-5" style="width: 100px;">
+                               
    <!-- Quantity buttons and input -->
-<div class="input-group quantity mb-5" style="width: 100px;">
-    <!-- Minus button -->
-    <div class="input-group-btn">
-        <button class="btn btn-sm btn-minus rounded-circle bg-light border" type="button" onclick="decreaseQuantity()">
-            <i class="fa fa-minus"></i>
-        </button>
-    </div>
-    
-    <!-- Quantity input field -->
-    <input type="text" id="productQuantity" class="form-control form-control-sm text-center border-0" value="1">
-    
-    <!-- Plus button -->
-    <div class="input-group-btn">
-        <button class="btn btn-sm btn-plus rounded-circle bg-light border" type="button" onclick="increaseQuantity()">
-            <i class="fa fa-plus"></i>
-        </button>
-    </div>
-</div>
-
-<!-- Form to add to cart -->
 <form action="AddToCartServlet" method="post">
-    <!-- Hidden inputs for product details -->
     <input type="hidden" name="productID" value="<%= productId %>">
     <input type="hidden" name="productName" value="<%= productName %>">
     <input type="hidden" name="pricePerUnit" value="<%= productPrice %>">
     
-    <!-- Hidden quantity input that will update based on buttons -->
-    <input type="hidden" name="quantity" id="formQuantity" value="1">
+    <!-- Quantity input -->
+    <input type="number" name="quantity" value="1" min="1">
 
     <!-- Add to cart button -->
     <button type="submit" class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary" style="width:200px;">
@@ -205,29 +185,6 @@
     </button>
 </form>
 
-<script>
-    function increaseQuantity() {
-        var qtyInput = document.getElementById("productQuantity");
-        var formQtyInput = document.getElementById("formQuantity");
-        var currentQty = parseInt(qtyInput.value);
-        
-        // Increase quantity
-        qtyInput.value = currentQty + 1;
-        formQtyInput.value = currentQty + 1;
-    }
-
-    function decreaseQuantity() {
-        var qtyInput = document.getElementById("productQuantity");
-        var formQtyInput = document.getElementById("formQuantity");
-        var currentQty = parseInt(qtyInput.value);
-        
-        // Decrease quantity, but not below 1
-        if (currentQty > 1) {
-            qtyInput.value = currentQty - 1;
-            formQtyInput.value = currentQty - 1;
-        }
-    }
-</script>
 
 
                         </div>

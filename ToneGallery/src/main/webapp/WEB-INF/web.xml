@@ -26,7 +26,7 @@
     <servlet-name>ViewShopProductsServlet</servlet-name>
     <url-pattern>/shop</url-pattern>
 </servlet-mapping>
-  
+
 
   
 
