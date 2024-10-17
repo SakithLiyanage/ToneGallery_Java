@@ -35,7 +35,7 @@ public class RegisterServlet extends HttpServlet {
             if (isRegistered) {
                 response.sendRedirect("log.jsp");
             } else {
-                response.sendRedirect("404.html");
+                response.sendRedirect("error.jsp");
             }
         } catch (Exception e) {
             e.printStackTrace();

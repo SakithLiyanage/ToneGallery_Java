@@ -21,10 +21,10 @@ public class ViewProductServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String productName = request.getParameter("name");
 
-        // Retrieve product details from database using the product ID
+        
         Product product = ProductDAO.getProductByName(productName);
 
-        // Set product as an attribute and forward to a JSP page to display details
+        
         request.setAttribute("product", product);
         RequestDispatcher dispatcher = request.getRequestDispatcher("viewProduct.jsp");
         dispatcher.forward(request, response);

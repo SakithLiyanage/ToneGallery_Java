@@ -58,7 +58,7 @@
                     <p><strong>Category:</strong> <%= product.getCategory() %></p>
                     
                     <!-- Product Price -->
-                    <p><strong>Price:</strong> $<%= product.getPrice() %></p>
+                    <p><strong>Price:</strong> LKR <%= product.getPrice() %></p>
                     
                     <!-- Back Button -->
                     <a href="admindashboard.jsp" class="btn btn-secondary btn-back">Back to Dashboard</a>

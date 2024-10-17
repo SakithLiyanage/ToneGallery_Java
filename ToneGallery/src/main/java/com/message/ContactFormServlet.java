@@ -15,52 +15,57 @@ import jakarta.servlet.RequestDispatcher;
 @WebServlet("/ContactFormServlet")
 public class ContactFormServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
-    
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Retrieve form parameters
+        // Retrieve form parameters with basic validation
         String name = request.getParameter("name");
         String email = request.getParameter("email");
         String message = request.getParameter("message");
-        
-        Connection conn = null;
-        PreparedStatement stmt = null;
-        
-        try {
-            // Establish database connection
-            conn = DBConnection.getConnection();  // Ensure this works
 
-            // Insert message into the database
-            String sql = "INSERT INTO messages (name, email, message) VALUES (?, ?, ?)";
-            stmt = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);  // Fetch generated keys
+        // Input validation
+        if (name == null || name.isEmpty() || email == null || email.isEmpty() || message == null || message.isEmpty()) {
+            request.setAttribute("error", "All fields are required!");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("contact.jsp");
+            dispatcher.forward(request, response);
+            return;
+        }
+
+        // Prepare to interact with the database
+        try (Connection conn = DBConnection.getConnection(); 
+             PreparedStatement stmt = conn.prepareStatement("INSERT INTO messages (name, email, message) VALUES (?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS)) {
+            
+            // Set parameters and execute the query
             stmt.setString(1, name);
             stmt.setString(2, email);
             stmt.setString(3, message);
-            stmt.executeUpdate();
-            
-            // Retrieve the message ID
-            ResultSet rs = stmt.getGeneratedKeys();
-            int messageId = -1;
-            if (rs.next()) {
-                messageId = rs.getInt(1);
+            int rowsAffected = stmt.executeUpdate();
+
+            // Check if the insert was successful
+            if (rowsAffected > 0) {
+                // Retrieve the generated message ID
+                try (ResultSet rs = stmt.getGeneratedKeys()) {
+                    if (rs.next()) {
+                        int messageId = rs.getInt(1);
+
+                        // Set attributes for confirmation view
+                        request.setAttribute("messageId", messageId);
+                        request.setAttribute("name", name);
+                        request.setAttribute("email", email);
+                        request.setAttribute("message", message);
+
+                        // Forward to the view-message.jsp
+                        RequestDispatcher dispatcher = request.getRequestDispatcher("view-message.jsp");
+                        dispatcher.forward(request, response);
+                    }
+                }
+            } else {
+                // If no rows were affected, show an error
+                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Failed to save the message.");
             }
 
-            // Set attributes to display the message
-            request.setAttribute("messageId", messageId);
-            request.setAttribute("name", name);
-            request.setAttribute("email", email);
-            request.setAttribute("message", message);
-
-            // Forward to the view message page
-            RequestDispatcher dispatcher = request.getRequestDispatcher("view-message.jsp");
-            dispatcher.forward(request, response);
-            
         } catch (SQLException e) {
             e.printStackTrace();
-            response.sendRedirect("error.jsp");  // Consider adding more details about the error here for debugging
-        } finally {
-            // Close resources
-            if (stmt != null) try { stmt.close(); } catch (SQLException ignore) {}
-            if (conn != null) try { conn.close(); } catch (SQLException ignore) {}
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "A database error occurred.");
         }
     }
 }

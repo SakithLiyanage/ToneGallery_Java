@@ -40,7 +40,7 @@
                     <a href="edit-message.jsp?id=<%= messageId %>" class="btn btn-warning me-3">
                         <i class="fas fa-edit"></i> Edit
                     </a>
-                    <a href="delete-message.jsp?id=<%= messageId %>" class="btn btn-danger">
+                    <a href="delete-message.jsp?id=<%= messageId %>" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this message?');">
                         <i class="fas fa-trash-alt"></i> Delete
                     </a>
                 </div>

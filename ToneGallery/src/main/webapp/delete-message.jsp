@@ -81,8 +81,8 @@
         <div class="loader"></div>
     </div>
 <%
-        // Redirect after a short delay to allow the user to see the success message
-        response.setHeader("Refresh", "2; URL=contact.jsp");  // Redirect to the contact page after 2 seconds
+        // Redirect 
+        response.setHeader("Refresh", "2; URL=contact.jsp");  
     } catch (SQLException e) {
         e.printStackTrace();
 %>

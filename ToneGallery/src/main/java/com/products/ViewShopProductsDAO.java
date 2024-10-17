@@ -21,7 +21,7 @@ public class ViewShopProductsDAO {
                     resultSet.getInt("productID"),
                     resultSet.getString("name"),
                     resultSet.getString("category"),
-                    resultSet.getDouble("price"),  // Price as double
+                    resultSet.getDouble("price"),  
                     resultSet.getString("image_path")
                 );
                 products.add(product);

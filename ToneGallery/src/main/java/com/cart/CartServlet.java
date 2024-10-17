@@ -1,19 +1,21 @@
-package com.products;
+package com.cart;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet("/ProductsServlet")
-public class ProductsServlet extends HttpServlet {
+@WebServlet("/viewCart")
+public class CartServlet extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<Product> products = ShowProductDAO.getAllProducts();  // Fetch all products from the database
-        request.setAttribute("products", products);  
-        request.getRequestDispatcher("products.jsp").forward(request, response);  // Forward 
+        CartDAO cartDAO = new CartDAO();
+        List<CartItem> cartItems = cartDAO.getAllCartItems();
+        request.setAttribute("cartItems", cartItems);
+        request.getRequestDispatcher("cart.jsp").forward(request, response);
     }
 }

@@ -4,7 +4,7 @@ public class Product {
     private int productID;
     private String name;
     private String category;
-    private double price;  // Use double consistently
+    private double price;  
     private String image_path;
 
     // Default constructor

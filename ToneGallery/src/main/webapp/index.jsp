@@ -2,12 +2,13 @@
 <%@ page import="com.products.Product" %>
 <%@ page import="com.products.ViewShopProductsDAO" %>
 <%@ page import="java.util.List" %>
+<%@ page import="com.log.Login" %> 
 <!DOCTYPE html>
 <html lang="en">
 
     <head>
         <meta charset="utf-8">
-        <title>Tone Gallery</title>
+        <title>Tone Gallery | Home</title>
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
         <meta content="" name="keywords">
         <meta content="" name="description">
@@ -52,8 +53,7 @@
                         <small class="me-3"><i class="fas fa-envelope me-2 text-secondary"></i><a href="#" class="text-white">customersupport@tonegallery.com</a></small>
                     </div>
                     <div class="top-link pe-2">
-                        <a href="#" class="text-white"><small class="text-white mx-2">Privacy Policy</small>/</a>
-                        <a href="#" class="text-white"><small class="text-white mx-2">Terms of Use</small></a> 
+                        
                     </div>
                 </div>
             </div>
@@ -67,27 +67,30 @@
                         <div class="navbar-nav mx-auto">
                             <a href="index.jsp" class="nav-item nav-link active">Home</a>
                             <a href="shop.jsp" class="nav-item nav-link">Shop</a>
-                            <!-- <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
-                                <div class="dropdown-menu m-0 bg-secondary rounded-0">
-                                    <a href="cart.html" class="dropdown-item">Cart</a>
-                                    <a href="chackout.html" class="dropdown-item">Chackout</a>
-                                    <a href="feedback.html" class="dropdown-item">Feedbacks</a>
-                                    <a href="404.html" class="dropdown-item">404 Page</a>
-                                </div>
-                            </div> -->
+                            
                             <a href="contact.jsp" class="nav-item nav-link">Contact</a>
                             <a href="feedback.jsp" class="nav-item nav-link">Feedback</a>
-                            <a href="log.jsp" class="nav-item nav-link active"><button style="border-radius: 20px;padding:5px 5px;width:100px;border:0px;">Log In</button></a>
-                            <a href="log.jsp" class="nav-item nav-link active"><button style="border-radius: 20px;padding:5px 5px;width:100px;border:0px;">Sign Up</button></a>
+                            <% 
+                        // Check if the user is logged in
+                        Login user = (Login) session.getAttribute("user"); 
+                        if (user == null) { %>
+                            <a href="log.jsp" class="nav-item nav-link active">
+                                <button style="border-radius: 20px; padding: 5px 5px; width: 100px; border: 0px;">Log In</button>
+                            </a>
+                            <a href="log.jsp" class="nav-item nav-link active">
+                                <button style="border-radius: 20px; padding: 5px 5px; width: 100px; border: 0px;">Sign Up</button>
+                            </a>
+                        <% } else { %>
+                            <span class="nav-item nav-link">Welcome, <%= user.getUsername() %>!</span>
+                            <a href="logout" class="nav-item nav-link active">
+                                <button style="border-radius: 20px; padding: 5px 5px; width: 100px; border: 0px;">Logout</button>
+                            </a>
+                        <% } %>
                         </div>
                         <div class="d-flex m-3 me-0">
                             
-                            <a href="log.jsp" class="position-relative me-4 my-auto">
-                                <i class="fa fa-shopping-bag fa-2x"></i>
-                                
-                            </a>
-                            <a href="log.jsp" class="my-auto">
+                            
+                            <a href="userprofile.jsp" class="my-auto">
                                 <i class="fas fa-user fa-2x"></i>
                             </a>
                         </div>
@@ -153,7 +156,7 @@
                             </div>
                             <div class="featurs-content text-center">
                                 <h5>Free Shipping</h5>
-                                <p class="mb-0">Free on order over $300</p>
+                                <p class="mb-0">Free on order over 50,000 LKR</p>
                             </div>
                         </div>
                     </div>
@@ -213,7 +216,7 @@
                             </div>
                             <div class="p-4 border border-secondary border-top-0 rounded-bottom">
                                 <h4 class="text-dark fw-bold">Guitar</h4>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt.</p>
+                                <p>Sleek design, rich tone, versatile, durable, lightweight, ergonomic, comfortable, professional.</p>
                                 <a href="shop.jsp" class="btn btn-outline-secondary rounded-pill"><i class="fa fa-shopping-bag me-2"></i> Shop Now</a>
                             </div>
                         </div>
@@ -226,7 +229,7 @@
                             </div>
                             <div class="p-4 border border-secondary border-top-0 rounded-bottom">
                                 <h4 class="text-dark fw-bold">Drums</h4>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt.</p>
+                                <p>Powerful sound, durable, versatile, rhythmic, responsive, ergonomic, dynamic, balanced, comfortable, professional.</p>
                                 <a href="shop.jsp" class="btn btn-outline-secondary rounded-pill"><i class="fa fa-shopping-bag me-2"></i> Shop Now</a>
                             </div>
                         </div>
@@ -239,7 +242,7 @@
                             </div>
                             <div class="p-4 border border-secondary border-top-0 rounded-bottom">
                                 <h4 class="text-dark fw-bold">Keyboards & Synth</h4>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt.</p>
+                                <p>Expressive, versatile, innovative, dynamic, responsive, sleek, portable, professional, customizable, intuitive.</p>
                                 <a href="shop.jsp" class="btn btn-outline-secondary rounded-pill"><i class="fa fa-shopping-bag me-2"></i> Shop Now</a>
                             </div>
                         </div>
@@ -252,7 +255,7 @@
                             </div>
                             <div class="p-4 border border-secondary border-top-0 rounded-bottom">
                                 <h4 class="text-dark fw-bold">Live Sound & Light</h4>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt.</p>
+                                <p>Powerful, immersive, dynamic, versatile, crisp, reliable, bright, responsive, professional, vibrant.</p>
                                 <a href="shop.jsp" class="btn btn-outline-secondary rounded-pill"><i class="fa fa-shopping-bag me-2"></i> Shop Now</a>
                             </div>
                         </div>
@@ -265,7 +268,7 @@
                             </div>
                             <div class="p-4 border border-secondary border-top-0 rounded-bottom">
                                 <h4 class="text-dark fw-bold">Studio & Recordings</h4>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt.</p>
+                                <p>High-quality, precise, professional, versatile, detailed, reliable, innovative, immersive, crisp, durable.</p>
                                 <a href="shop.jsp" class="btn btn-outline-secondary rounded-pill"><i class="fa fa-shopping-bag me-2"></i> Shop Now</a>
                             </div>
                         </div>
@@ -278,7 +281,7 @@
                             </div>
                             <div class="p-4 border border-secondary border-top-0 rounded-bottom">
                                 <h4 class="text-dark fw-bold">Strings</h4>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt.</p>
+                                <p>Warm tone, resonant, durable, versatile, expressive, smooth, responsive, balanced, ergonomic, rich.</p>
                                 <a href="shop.jsp" class="btn btn-outline-secondary rounded-pill"><i class="fa fa-shopping-bag me-2"></i> Shop Now</a>
                             </div>
                         </div>
@@ -291,36 +294,35 @@
 
 <style>
 .categories {
-    background-color: #f8f9fa; /* Light background for contrast */
+    background-color: #f8f9fa; 
 }
 
 .category-item {
-    overflow: hidden; /* Ensure the image does not overflow */
-    transition: transform 0.3s ease; /* Add a slight hover effect */
-    height: 500px; /* Set a fixed height for the card */
+    overflow: hidden; 
+    transition: transform 0.3s ease; 
+    height: 500px; 
 }
 
 .category-item:hover {
-    transform: scale(1.05); /* Slightly enlarge on hover */
+    transform: scale(1.05); 
 }
 
 .category-img {
-    position: relative; /* Allows for absolute positioning of label */
-    height: 250px; /* Set a fixed height for the image */
-    overflow: hidden; /* Hide overflow for non-uniform images */
+    position: relative; 
+    height: 250px; 
+    overflow: hidden; 
 }
 
 .category-img img {
     width: 100%;
-    height: 100%; /* Ensure the image covers the entire height */
-    object-fit: cover; /* Maintain aspect ratio while covering the area */
-}
+    height: 100%; 
+    object-fit: cover; 
 
 .category-label {
     position: absolute;
     top: 15px;
     left: 15px;
-    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
+    background-color: rgba(0, 0, 0, 0.7); 
     color: white;
     padding: 5px 10px;
     border-radius: 5px;
@@ -329,17 +331,17 @@
 }
 
 .category-item:hover .category-label {
-    opacity: 0.9; /* Slightly more visible on hover */
+    opacity: 0.9; 
 }
 
 .btn-outline-primary {
-    border-color: #007bff; /* Primary color for button */
-    color: #007bff; /* Button text color */
+    border-color: #007bff; 
+    color: #007bff; 
 }
 
 .btn-outline-primary:hover {
-    background-color: #007bff; /* Primary color on hover */
-    color: white; /* White text on hover */
+    background-color: #007bff; 
+    color: white; 
 }
 
 </style>
@@ -351,20 +353,20 @@
             <div class="container py-5">
                 <div class="row g-4 justify-content-center">
                     <div class="col-md-6 col-lg-4">
-                        <a href="#">
+                        
                             <div class="service-item bg-secondary rounded border border-secondary">
-                                <img src="img/discount.png" class="img-fluid rounded-top w-100" alt="">
+                                <img src="img/discount1.jpg" class="img-fluid rounded-top w-100" alt="">
                                 <div class="px-4 rounded-bottom">
                                     <div class="service-content bg-primary text-center p-4 rounded">
                                         <h5 class="text-white">Discount</h5>
-                                        <h3 class="mb-0">20% OFF</h3>
+                                        <h3 class="mb-0">30% OFF</h3>
                                     </div>
                                 </div>
                             </div>
-                        </a>
+                        
                     </div>
                     <div class="col-md-6 col-lg-4">
-                        <a href="#">
+                        
                             <div class="service-item bg-dark rounded border border-dark">
                                 <img src="img/discount.png" class="img-fluid rounded-top w-100" alt="">
                                 <div class="px-4 rounded-bottom">
@@ -374,28 +376,26 @@
                                     </div>
                                 </div>
                             </div>
-                        </a>
+                        
                     </div>
                     <div class="col-md-6 col-lg-4">
-                        <a href="#">
+                        
                             <div class="service-item bg-primary rounded border border-primary">
-                                <img src="img/discount.png" class="img-fluid rounded-top w-100" alt="">
+                                <img src="img/friday.jpg" class="img-fluid rounded-top w-100" alt="">
                                 <div class="px-4 rounded-bottom">
                                     <div class="service-content bg-secondary text-center p-4 rounded">
-                                        <h5 class="text-white">Discount</h5>
-                                        <h3 class="mb-0">Discount 30$</h3>
+                                        <h5 class="text-white">Black Friday</h5>
+                                        <h3 class="mb-0">Save up to 30%</h3>
                                     </div>
                                 </div>
                             </div>
-                        </a>
+                        
                     </div>
                 </div>
             </div>
         </div>
         <!-- Discounts End -->
 
-
-        <!-- featured Shop Start-->
 <!-- featured Shop Start-->
 <div class="container-fluid py-5">
     <div class="container py-5">
@@ -426,26 +426,26 @@
                                 <div class="p-4 border border-secondary border-top-0 rounded-bottom">
                                     <div class="d-flex justify-content-between flex-lg-wrap">
                                         <h1 class="text-dark fs-5 fw-bold mb-0"><%= product.getName() %></h1>
-                                        <p class="text-dark fs-5 fw-bold mb-0">$<%= product.getPrice() %></p>
+                                        <p class="text-dark fs-5 fw-bold mb-0">LKR <%= product.getPrice() %></p>
                                     </a>
-                                    <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary">
-                                        <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
+                                    <a href="shop.jsp" class="btn border border-secondary rounded-pill px-3 text-primary">
+                                        <i class="fa fa-shopping-bag me-2 text-primary"></i> Shop Now
                                     </a>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <%
-                        } // End of for loop
+                        }
                     %>
                     <style>
-                        /* Hover effect for product image */
+                        
                         .hover-zoom img {
                             transition: transform 0.5s ease;
                         }
 
                         .hover-zoom:hover img {
-                            transform: scale(1.05); /* Slight zoom effect on hover */
+                            transform: scale(1.05); 
                         }
                     </style>
 
@@ -467,7 +467,7 @@
                             <h1 class="display-3 text-white">Flash sale</h1>
                             <p class="fw-normal display-3 text-dark mb-4">Limited Discount</p>
                             <p class="mb-4 text-dark">The generated Lorem Ipsum is therefore always free from repetition injected humour, or non-characteristic words etc.</p>
-                            <a href="#" class="banner-btn btn border-2 border-white rounded-pill text-dark py-3 px-5">BUY</a>
+                            <a href="shop.jsp" class="banner-btn btn border-2 border-white rounded-pill text-dark py-3 px-5">BUY</a>
                         </div>
                     </div>
                     <div class="col-lg-6">
@@ -476,7 +476,7 @@
                             <div class="d-flex align-items-center justify-content-center bg-white rounded-circle position-absolute" style="width: 140px; height: 140px; top: 0; left: 0;">
                                 <h1 style="font-size: 100px;"></h1>
                                 <div class="d-flex flex-column">
-                                    <span class="h2 mb-0">300$</span>
+                                    <span class="h2 mb-0">40 %</span>
                                     <span class="h4 text-muted mb-0"></span>
                                 </div>
                             </div>
@@ -499,7 +499,7 @@
                             <div class="counter bg-white rounded p-5">
                                 <i class="fa fa-users text-secondary"></i>
                                 <h4>satisfied customers</h4>
-                                <h1>1963</h1>
+                                <h1>1000 +</h1>
                             </div>
                         </div>
                         <div class="col-md-6 col-lg-6 col-xl-3">
@@ -513,16 +513,10 @@
                             <div class="counter bg-white rounded p-5">
                                 <i class="fa fa-users text-secondary"></i>
                                 <h4>quality certificates</h4>
-                                <h1>33</h1>
+                                <h1>20</h1>
                             </div>
                         </div>
-                        <div class="col-md-6 col-lg-6 col-xl-3">
-                            <div class="counter bg-white rounded p-5">
-                                <i class="fa fa-users text-secondary"></i>
-                                <h4>Available Products</h4>
-                                <h1>789</h1>
-                            </div>
-                        </div>
+                        
                     </div>
                 </div>
             </div>
@@ -545,10 +539,7 @@
                             </a>
                         </div>
                         <div class="col-lg-6">
-                            <div class="position-relative mx-auto">
-                                <input class="form-control border-0 w-100 py-3 px-4 rounded-pill" type="number" placeholder="Your Email">
-                                <button type="submit" class="btn btn-primary border-0 border-secondary py-3 px-4 position-absolute rounded-pill text-white" style="top: 0; right: 0;">Subscribe Now</button>
-                            </div>
+                            
                         </div>
                         <div class="col-lg-3">
                             <div class="d-flex justify-content-end pt-3">
@@ -564,39 +555,33 @@
                     <div class="col-lg-3 col-md-6">
                         <div class="footer-item">
                             <h4 class="text-light mb-3">Why People Like us!</h4>
-                            <p class="mb-4">typesetting, remaining essentially unchanged. It was 
-                                popularised in the 1960s with the like Aldus PageMaker including of Lorem Ipsum.</p>
-                            <a href="" class="btn border-secondary py-2 px-4 rounded-pill text-primary">Read More</a>
+                            <p class="mb-4">People love ToneGallery for quality instruments, personalized service, and a passionate community of musicians.</p>
+                            
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-6">
                         <div class="d-flex flex-column text-start footer-item">
                             <h4 class="text-light mb-3">Shop Info</h4>
-                            <a class="btn-link" href="">About Us</a>
-                            <a class="btn-link" href="">Contact Us</a>
-                            <a class="btn-link" href="">Privacy Policy</a>
-                            <a class="btn-link" href="">Terms & Condition</a>
-                            <a class="btn-link" href="">Return Policy</a>
-                            <a class="btn-link" href="">FAQs & Help</a>
+                            <a class="btn-link" href="shop.jsp">Shop</a>
+                            <a class="btn-link" href="contact.jsp">Contact Us</a>
+                            
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-6">
                         <div class="d-flex flex-column text-start footer-item">
                             <h4 class="text-light mb-3">Account</h4>
-                            <a class="btn-link" href="">My Account</a>
-                            <a class="btn-link" href="">Shop details</a>
-                            <a class="btn-link" href="">Shopping Cart</a>
-                            <a class="btn-link" href="">Wishlist</a>
-                            <a class="btn-link" href="">Order History</a>
-                            <a class="btn-link" href="">International Orders</a>
+                            <a class="btn-link" href="userprofile.jsp">My Account</a>
+                            <a class="btn-link" href="shop.jsp">Shop details</a>
+                            <a class="btn-link" href="cart.jsp">Shopping Cart</a>
+                            
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-6">
                         <div class="footer-item">
                             <h4 class="text-light mb-3">Contact</h4>
-                            <p>Address: 1429 Netus Rd, NY 48247</p>
-                            <p>Email: Example@gmail.com</p>
-                            <p>Phone: +0123 4567 8910</p>
+                            <p>Address: Tonegallery</p>
+                            <p>Email: customersupport@tonegallery.com</p>
+                            <p>Phone: +94 76 909 2755</p>
                             <p>Payment Accepted</p>
                             <img src="img/payment.png" class="img-fluid" alt="">
                         </div>

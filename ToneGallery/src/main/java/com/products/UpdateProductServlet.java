@@ -13,51 +13,54 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
 
-@WebServlet("/ProductServlet")
+@WebServlet("/UpdateProductServlet")
 @MultipartConfig(
-    fileSizeThreshold = 1024 * 1024 * 2,  
-    maxFileSize = 1024 * 1024 * 10,      
-    maxRequestSize = 1024 * 1024 * 50   
+    fileSizeThreshold = 1024 * 1024 * 2,  // 2MB
+    maxFileSize = 1024 * 1024 * 10,      // 10MB
+    maxRequestSize = 1024 * 1024 * 50   // 50MB
 )
-public class AddProductsServlet extends HttpServlet {
+public class UpdateProductServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
-    
-    // Directory where uploaded files will be saved
     private static final String UPLOAD_DIR = "uploads";
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
-
-        // Retrieve form data
         String productName = request.getParameter("name");
         String category = request.getParameter("category");
         double price = Double.parseDouble(request.getParameter("price"));
         Part filePart = request.getPart("image"); 
 
-        // Create a path to save the uploaded file
-        String fileName = extractFileName(filePart);
-        String uploadPath = getServletContext().getRealPath("") + File.separator + UPLOAD_DIR;
-        File uploadDir = new File(uploadPath);
-        if (!uploadDir.exists()) uploadDir.mkdir(); 
+        String imagePath = null;
+        // Check if a new file is uploaded
+        if (filePart != null && filePart.getSize() > 0) {
+            String fileName = extractFileName(filePart);
+            String uploadPath = getServletContext().getRealPath("") + File.separator + UPLOAD_DIR;
+            File uploadDir = new File(uploadPath);
+            if (!uploadDir.exists()) uploadDir.mkdir(); // Create the directory if it does not exist
 
-        // Save the file to the server
-        filePart.write(uploadPath + File.separator + fileName);
-        String imagePath = UPLOAD_DIR + File.separator + fileName; 
+            // Save the file to the server
+            filePart.write(uploadPath + File.separator + fileName);
+            imagePath = UPLOAD_DIR + File.separator + fileName; // Store the relative path to DB
+        }
 
-        // Insert product into the database
+        // Update product in the database
         try (Connection connection = DBConnection.getConnection()) {
-            String sql = "INSERT INTO products (name, category, price, image_path) VALUES (?, ?, ?, ?)";
+            String sql = "UPDATE products SET category = ?, price = ?" + (imagePath != null ? ", image_path = ?" : "") + " WHERE name = ?";
             PreparedStatement stmt = connection.prepareStatement(sql);
-            stmt.setString(1, productName);
-            stmt.setString(2, category);
-            stmt.setDouble(3, price);
-            stmt.setString(4, imagePath);
-
-            int rowsInserted = stmt.executeUpdate();
-            if (rowsInserted > 0) {
-                response.sendRedirect("admindashboard.jsp"); 
+            stmt.setString(1, category);
+            stmt.setDouble(2, price);
+            if (imagePath != null) {
+                stmt.setString(3, imagePath);
+                stmt.setString(4, productName);
             } else {
-                response.sendRedirect("error.jsp");
+                stmt.setString(3, productName);
+            }
+
+            int rowsUpdated = stmt.executeUpdate();
+            if (rowsUpdated > 0) {
+                response.sendRedirect("admindashboard.jsp"); // Redirect to dashboard after success
+            } else {
+                response.sendRedirect("error.jsp"); // Handle failure case
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -73,5 +76,6 @@ public class AddProductsServlet extends HttpServlet {
                 return content.substring(content.indexOf("=") + 2, content.length() - 1);
             }
         }
-        return "default.png"; 
-}}
+        return "default.png"; // Default name if no file is uploaded
+    }
+}

@@ -19,10 +19,10 @@ public class DeleteProductServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String productName = request.getParameter("name");
 
-        // Delete product from the database
+        
         ProductDAO.deleteProduct(productName);
 
-        // Redirect back to the admin dashboard after deletion
+        // Redirect 
         response.sendRedirect("admindashboard.jsp");
     }
 }

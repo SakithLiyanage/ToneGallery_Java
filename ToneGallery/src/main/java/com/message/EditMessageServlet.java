@@ -28,7 +28,7 @@ public class EditMessageServlet extends HttpServlet {
 
         try {
             // Establish database connection
-            conn = DBConnection.getConnection();  // Assume you have a DB connection utility class
+            conn = DBConnection.getConnection();  
 
             // Update message in the database
             String sql = "UPDATE messages SET name=?, email=?, message=? WHERE id=?";

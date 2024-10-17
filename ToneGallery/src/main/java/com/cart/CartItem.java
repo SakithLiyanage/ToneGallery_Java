@@ -1,29 +1,27 @@
 package com.cart;
 
-
 public class CartItem {
-    private int id;
-    private int productId;
+    private int cartID;
+    private int productID;
     private String productName;
     private double pricePerUnit;
     private int quantity;
-    private double totalPrice;
 
-    // Getters and Setters
-    public int getId() {
-        return id;
+    // Getters and setters
+    public int getCartID() {
+        return cartID;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setCartID(int cartID) {
+        this.cartID = cartID;
     }
 
-    public int getProductId() {
-        return productId;
+    public int getProductID() {
+        return productID;
     }
 
-    public void setProductId(int productId) {
-        this.productId = productId;
+    public void setProductID(int productID) {
+        this.productID = productID;
     }
 
     public String getProductName() {
@@ -51,10 +49,6 @@ public class CartItem {
     }
 
     public double getTotalPrice() {
-        return totalPrice;
-    }
-
-    public void setTotalPrice(double totalPrice) {
-        this.totalPrice = totalPrice;
+        return this.pricePerUnit * this.quantity;
     }
 }

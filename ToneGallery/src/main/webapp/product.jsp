@@ -65,15 +65,7 @@
                         <div class="navbar-nav mx-auto">
                             <a href="index.jsp" class="nav-item nav-link active">Home</a>
                             <a href="shop.jsp" class="nav-item nav-link">Shop</a>
-                            <!-- <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
-                                <div class="dropdown-menu m-0 bg-secondary rounded-0">
-                                    <a href="cart.html" class="dropdown-item">Cart</a>
-                                    <a href="chackout.html" class="dropdown-item">Chackout</a>
-                                    <a href="feedback.html" class="dropdown-item">Feedbacks</a>
-                                    <a href="404.html" class="dropdown-item">404 Page</a>
-                                </div>
-                            </div> -->
+                            
                             <a href="contact.jsp" class="nav-item nav-link">Contact</a>
                             <a href="feedback.jsp" class="nav-item nav-link">Feedback</a>
                             <a href="log.jsp" class="nav-item nav-link active"><button style="border-radius: 20px;padding:5px 5px;width:100px;border:0px;">Log In</button></a>
@@ -158,32 +150,15 @@
                         <div class="col-lg-6">
                             <h4 class="fw-bold mb-3"><%= productName %></h4>
                             <p class="mb-3">Category: <%= productCategory %></p>
-                            <h5 class="fw-bold mb-3"><%= productPrice %> $</h5>
-                            <div class="d-flex mb-4">
-                                <i class="fa fa-star text-secondary"></i>
-                                <i class="fa fa-star text-secondary"></i>
-                                <i class="fa fa-star text-secondary"></i>
-                                <i class="fa fa-star text-secondary"></i>
-                                <i class="fa fa-star"></i>
-                            </div>
-                            <p class="mb-4"><%= productDescription %></p>
+                            <h5 class="fw-bold mb-3"><%= productPrice %> LKR</h5>
+                            
+                            
                             <div class="input-group quantity mb-5" style="width: 100px;">
-                               <div class="input-group quantity mb-5" style="width: 100px;">
-                               
-   <!-- Quantity buttons and input -->
-<form action="AddToCartServlet" method="post">
-    <input type="hidden" name="productID" value="<%= productId %>">
-    <input type="hidden" name="productName" value="<%= productName %>">
-    <input type="hidden" name="pricePerUnit" value="<%= productPrice %>">
-    
-    <!-- Quantity input -->
-    <input type="number" name="quantity" value="1" min="1">
+                               <div class="input-group quantity mb-5" style="width: 100px;">                       
 
-    <!-- Add to cart button -->
-    <button type="submit" class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary" style="width:200px;">
-        <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
-    </button>
-</form>
+                               
+                               
+
 
 
 
@@ -207,9 +182,91 @@
                         %>
                         
                     </div>
+<form action="AddtoCart" method="post" class="cart-form">
+    <input type="hidden" name="productID" value="<%= productId %>">
+    <input type="hidden" name="productName" value="<%= productName %>">
+    <input type="hidden" name="pricePerUnit" value="<%= productPrice %>">
+
+    <!-- Styled Quantity Input -->
+    <div class="quantity-container">
+        <label for="quantity" class="form-label">Quantity:</label>
+        <input type="number" name="quantity" id="quantity" value="1" min="1" required class="form-control quantity-input">
+    </div>
+
+    <!-- Styled Add to Cart Button -->
+    <button type="submit" class="btn btn-primary add-to-cart-btn">
+        <i class="fas fa-shopping-cart"></i> Add to Cart
+    </button>
+</form>
+<style>
+/* Form styling */
+.cart-form {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+/* Quantity input container */
+.quantity-container {
+    display: flex;
+    align-items: center;
+}
+
+/* Label styling */
+.quantity-container .form-label {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+/* Quantity input styling */
+.quantity-input {
+    width: 60px;
+    height: 40px;
+    text-align: center;
+    border-radius: 5px;
+    border: 2px solid #ccc;
+    padding: 5px;
+}
+
+/* Add to Cart button styling */
+.add-to-cart-btn {
+    background-color: #ff9900;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 30px;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.add-to-cart-btn:hover {
+    background-color: #cc7a00;
+    color: #fff;
+    cursor: pointer;
+}
+
+/* Icon within the button */
+.add-to-cart-btn i {
+    margin-right: 5px;
+}
+
+/* Quantity input hover and focus effects */
+.quantity-input:focus,
+.quantity-input:hover {
+    border-color: #ff9900;
+    box-shadow: 0 0 5px rgba(255, 153, 0, 0.5);
+}
+</style>
+
                 </div>
             </div>
         </div>
+        
+           <!-- Quantity buttons and input -->
+
     </section>
     <!-- Single Product End -->
 

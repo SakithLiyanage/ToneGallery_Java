@@ -1,6 +1,7 @@
 <%@ page import="java.sql.*" %>
 <%@ page import="java.util.*" %>
 <%@ page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page import="com.log.Login" %> 
 
 <!DOCTYPE html>
 <html lang="en">
@@ -41,46 +42,62 @@
     </div>
     <!-- Spinner End -->
 
-    <!-- Navbar Start -->
-    <div class="container-fluid fixed-top">
-        <div class="container topbar bg-primary d-none d-lg-block">
-            <div class="d-flex justify-content-between">
-                <div class="top-info ps-2">
-                    <small class="me-3"><i class="fas fa-map-marker-alt me-2 text-secondary"></i> <a href="#" class="text-white">123 Street, New York</a></small>
-                    <small class="me-3"><i class="fas fa-envelope me-2 text-secondary"></i><a href="#" class="text-white">Email@Example.com</a></small>
-                </div>
-                <div class="top-link pe-2">
-                    <a href="#" class="text-white"><small class="text-white mx-2">Privacy Policy</small>/</a>
-                    <a href="#" class="text-white"><small class="text-white mx-2">Terms of Use</small></a>
+     <!-- Navbar start -->
+        <div class="container-fluid fixed-top">
+            <div class="container topbar bg-primary d-none d-lg-block">
+                <div class="d-flex justify-content-between">
+                    <div class="top-info ps-2">
+                        <small class="me-3"><i class="fas fa-map-marker-alt me-2 text-secondary"></i> <a href="#" class="text-white">ToneGallery</a></small>
+                        <small class="me-3"><i class="fas fa-envelope me-2 text-secondary"></i><a href="#" class="text-white">customersupport@tonegallery.com</a></small>
+                    </div>
+                    <div class="top-link pe-2">
+                        
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="container px-0">
-            <nav class="navbar navbar-light bg-white navbar-expand-xl">
-                <a href="index.html" class="navbar-brand"><h1 class="text-primary display-6"><img src="img/logopng2.png"width="40%"></h1></a>
-                <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-                    <span class="fa fa-bars text-primary"></span>
-                </button>
-                <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
-                    <div class="navbar-nav mx-auto">
-                        <a href="index.jsp" class="nav-item nav-link">Home</a>
-                        <a href="shop.jsp" class="nav-item nav-link">Shop</a>
-                        <a href="contact.jsp" class="nav-item nav-link">Contact</a>
-                        <a href="feedback.jsp" class="nav-item nav-link active">Feedback</a>
+            <div class="container px-0">
+                <nav class="navbar navbar-light bg-white navbar-expand-xl">
+                    <a href="index.html" class="navbar-brand"><h1 class="text-primary display-6"><img src="img/logopng2.png"width="50%"></h1></a>
+                    <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                        <span class="fa fa-bars text-primary"></span>
+                    </button>
+                    <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
+                        <div class="navbar-nav mx-auto">
+                            <a href="index.jsp" class="nav-item nav-link">Home</a>
+                            <a href="shop.jsp" class="nav-item nav-link">Shop</a>
+                            
+                            <a href="contact.jsp" class="nav-item nav-link">Contact</a>
+                            <a href="feedback.jsp" class="nav-item nav-link active">Feedback</a>
+                            <% 
+                        // Check if the user is logged in
+                        Login user = (Login) session.getAttribute("user"); 
+                        if (user == null) { %>
+                            <a href="log.jsp" class="nav-item nav-link active">
+                                <button style="border-radius: 20px; padding: 5px 5px; width: 100px; border: 0px;">Log In</button>
+                            </a>
+                            <a href="log.jsp" class="nav-item nav-link active">
+                                <button style="border-radius: 20px; padding: 5px 5px; width: 100px; border: 0px;">Sign Up</button>
+                            </a>
+                        <% } else { %>
+                            <span class="nav-item nav-link">Welcome, <%= user.getUsername() %>!</span>
+                            <a href="logout" class="nav-item nav-link active">
+                                <button style="border-radius: 20px; padding: 5px 5px; width: 100px; border: 0px;">Logout</button>
+                            </a>
+                        <% } %>
+                        </div>
+                        <div class="d-flex m-3 me-0">
+                            
+                            
+                            <a href="userprofile.jsp" class="my-auto">
+                                <i class="fas fa-user fa-2x"></i>
+                            </a>
+                        </div>
                     </div>
-                    <div class="d-flex m-3 me-0">
-                        <a href="#" class="position-relative me-4 my-auto">
-                            <i class="fa fa-shopping-bag fa-2x"></i>
-                        </a>
-                        <a href="#" class="my-auto">
-                            <i class="fas fa-user fa-2x"></i>
-                        </a>
-                    </div>
-                </div>
-            </nav>
+                </nav>
+            </div>
         </div>
-    </div>
-    <!-- Navbar End -->
+        <!-- Navbar End -->
+
 
     <!-- Single Page Header Start -->
     <div class="container-fluid page-header py-5">
@@ -139,8 +156,6 @@
                                         <i class="fas fa-star"></i>
                                     <% } %>
                                 </div><br>
-                                <a href="updateFeedback.jsp?id=<%= rs.getInt("id") %>" class="btn btn-sm btn-secondary me-2">Edit</a>
-                                <a href="FeedbackServlet?action=delete&id=<%= rs.getInt("id") %>" onclick="return confirm('Are you sure?')"class="btn btn-sm btn-danger">Delete</a>
                                 
                             </div>
                         </div>
@@ -154,26 +169,27 @@
 
     <!-- Add New Feedback Section Start -->
     <div class="testimonial-header text-center">
-        <h4 class="text-primary">Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio, sit!</h4>
+        <h4 class="text-primary">Share your thoughts with us! We appreciate your feedbacks..
+</h4>
         <h1 class="display-5 mb-5 text-dark">Add New Feedback</h1>
     </div>
     <div class="container" style="padding: 0 15%;">
-        <form action="FeedbackServlet" method="GET">
+        <form name="feedbackForm" action="FeedbackServlet" method="POST" onsubmit="return validateForm()">
             <h4 class="mb-5 fw-bold">Add Feedback</h4>
             <div class="row g-4">
                 <div class="col-lg-6">
                     <div class="border-bottom rounded">
-                        <input type="text" name="name" class="form-control border-0 me-4" placeholder="Your Name *" required>
+                        <input type="text" name="name" class="form-control border-0 me-4" placeholder="Your Name *" >
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <div class="border-bottom rounded">
-                        <input type="email" name="email" class="form-control border-0" placeholder="Your Email *" required>
+                        <input type="email" name="email" class="form-control border-0" placeholder="Your Email *" >
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <div class="border-bottom rounded">
-                        <input type="text" name="profession" class="form-control border-0" placeholder="Your Profession *" required>
+                        <input type="text" name="profession" class="form-control border-0" placeholder="Your Profession *" >
                     </div>
                 </div>
                 <div class="col-lg-6">
@@ -189,7 +205,7 @@
                 </div>
                 <div class="col-lg-12">
                     <div class="border-bottom rounded">
-                        <textarea name="feedback" class="form-control border-0" rows="4" placeholder="Your Feedback *" required></textarea>
+                        <textarea name="feedback" class="form-control border-0" rows="4" placeholder="Your Feedback *" ></textarea>
                     </div>
                 </div>
             </div>
@@ -197,6 +213,34 @@
         </form>
     </div>
     <!-- Add New Feedback Section End -->
+ <script>
+    function validateForm() {
+        var name = document.forms["feedbackForm"]["name"].value;
+        var email = document.forms["feedbackForm"]["email"].value;
+        var profession = document.forms["feedbackForm"]["profession"].value;
+        var feedback = document.forms["feedbackForm"]["feedback"].value;
+        var rating = document.forms["feedbackForm"]["rating"].value;
+
+        var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+        if (name == "" || email == "" || profession == "" || feedback == "") {
+            alert("All fields must be filled out");
+            return false;
+        }
+
+        if (!emailPattern.test(email)) {
+            alert("Invalid email format");
+            return false;
+        }
+
+        if (rating < 1 || rating > 5) {
+            alert("Please select a valid rating between 1 and 5");
+            return false;
+        }
+
+        return true;
+    }
+</script>
+    
 
     <!-- Footer Start -->
         <div class="container-fluid bg-dark text-white-50 footer pt-5 mt-5">
@@ -210,10 +254,7 @@
                             </a>
                         </div>
                         <div class="col-lg-6">
-                            <div class="position-relative mx-auto">
-                                <input class="form-control border-0 w-100 py-3 px-4 rounded-pill" type="number" placeholder="Your Email">
-                                <button type="submit" class="btn btn-primary border-0 border-secondary py-3 px-4 position-absolute rounded-pill text-white" style="top: 0; right: 0;">Subscribe Now</button>
-                            </div>
+                            
                         </div>
                         <div class="col-lg-3">
                             <div class="d-flex justify-content-end pt-3">
@@ -229,39 +270,33 @@
                     <div class="col-lg-3 col-md-6">
                         <div class="footer-item">
                             <h4 class="text-light mb-3">Why People Like us!</h4>
-                            <p class="mb-4">typesetting, remaining essentially unchanged. It was 
-                                popularised in the 1960s with the like Aldus PageMaker including of Lorem Ipsum.</p>
-                            <a href="" class="btn border-secondary py-2 px-4 rounded-pill text-primary">Read More</a>
+                            <p class="mb-4">People love ToneGallery for quality instruments, personalized service, and a passionate community of musicians.</p>
+                            
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-6">
                         <div class="d-flex flex-column text-start footer-item">
                             <h4 class="text-light mb-3">Shop Info</h4>
-                            <a class="btn-link" href="">About Us</a>
-                            <a class="btn-link" href="">Contact Us</a>
-                            <a class="btn-link" href="">Privacy Policy</a>
-                            <a class="btn-link" href="">Terms & Condition</a>
-                            <a class="btn-link" href="">Return Policy</a>
-                            <a class="btn-link" href="">FAQs & Help</a>
+                            <a class="btn-link" href="index.jsp">Home</a>
+                            <a class="btn-link" href="contact.jsp">Contact Us</a>
+                            
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-6">
                         <div class="d-flex flex-column text-start footer-item">
                             <h4 class="text-light mb-3">Account</h4>
-                            <a class="btn-link" href="">My Account</a>
-                            <a class="btn-link" href="">Shop details</a>
-                            <a class="btn-link" href="">Shopping Cart</a>
-                            <a class="btn-link" href="">Wishlist</a>
-                            <a class="btn-link" href="">Order History</a>
-                            <a class="btn-link" href="">International Orders</a>
+                            <a class="btn-link" href="userprofile.jsp">My Account</a>
+                            <a class="btn-link" href="shop.jsp">Shop details</a>
+                            <a class="btn-link" href="cart.jsp">Shopping Cart</a>
+                            
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-6">
                         <div class="footer-item">
                             <h4 class="text-light mb-3">Contact</h4>
-                            <p>Address: 1429 Netus Rd, NY 48247</p>
-                            <p>Email: Example@gmail.com</p>
-                            <p>Phone: +0123 4567 8910</p>
+                            <p>Address: Tonegallery</p>
+                            <p>Email: customersupport@tonegallery.com</p>
+                            <p>Phone: +94 76 909 2755</p>
                             <p>Payment Accepted</p>
                             <img src="img/payment.png" class="img-fluid" alt="">
                         </div>
@@ -270,7 +305,7 @@
             </div>
         </div>
         <!-- Footer End -->
-
+        
         <!-- Copyright Start -->
         <div class="container-fluid copyright bg-dark py-4">
             <div class="container">
