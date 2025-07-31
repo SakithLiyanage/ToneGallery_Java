@@ -1,3 +1,6 @@
+<img width="5000" height="3333" alt="tonegallery" src="https://github.com/user-attachments/assets/fd842ad5-782a-4c82-936d-f8441062e345" />
+
+
 ToneGallery is a dynamic e-commerce platform designed to cater to musicians and music enthusiasts by providing a wide variety of high-quality music materials, including instruments such as guitars, drums, and other music-related equipment. The platform offers a seamless shopping experience with detailed product descriptions, secure payment options, and fast delivery, making it easy for customers to purchase the music gear they need from the comfort of their homes.
 
 Key Features:
